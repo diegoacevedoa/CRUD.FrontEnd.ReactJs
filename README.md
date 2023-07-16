@@ -3,22 +3,37 @@ CRUD Front End en ReactJs.
 
 PASOS PARA DESARROLLARLO
 
-1- Crear proyecto con Vite: npm create vite@latest project-name, seleccionamos reactjs y javascript
+1- Crear proyecto con Vite: npm create vite@latest project-name, seleccionamos reactjs y javascript.
+
 2- Nos ubicamos en la carpeta del proyecto: cd project-name
+
 3- Instalamos librerías de nodejs: npm install
+
 4- Ejecutamos proyecto para ver que todo funcione OK: npm run dev
+
 5- Instalamos estilos css: npm install react-bootstrap bootstrap --> o cualquier otros estilos y los iconos: npm i react-bootstrap-icons
-6- Eliminamos los archivos index.css, app.css, react.svg y los linkeos a esos archivos
+
+6- Eliminamos los archivos index.css, app.css, react.svg y los linkeos a esos archivos.
+
 7- Limpiamos componente App y agregamos sentencia: import "bootstrap/dist/css/bootstrap.min.css" para que funcione el boostrap, verificamos funcionamiento OK con npm run dev
+
 8- Instalar Sass para estilos, es mejor que css, es scss: npm install sass
+
 9- Instalamos sweetalert2 para los mensajes: npm i sweetalert2
+
 10-Creamos carpetas: api, components, helpers y hooks en carpeta src.
+
 11-Creamos carpetas: modules y ui en carpeta components.
+
 12-Incluimos componentes en la carpeta ui: button, field, label, loading, modal, pagination y table.
+
 13-Inlcuimos el hook useForm en la carpeta hooks para para capturar datos de entrada y sus validaciones.
+
 14-Incluimos el archivo fetch.js en la carpeta helpers para llamar el api del backend.
+
 15-Creamos la carpeta persona en modules y creamos los componentes en esta con rafc: Persona.jsx, PersonaList.jsx, PersonaForm.jsx y el
    archivo index.js para exportar el componente principal Persona.jsx, e invocamos el componente Persona.jsx desde el componente App.jsx.
+
 16-Creamos el archivo constants.js en la carpeta helpers con las rutas del api del backend:
 
 export const API = {
@@ -431,10 +446,7 @@ PersonaList.propTypes = {
 
 
 
-
-
 22-Modificar componente PersonaForm.jsx
-
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
@@ -707,11 +719,7 @@ PersonaForm.propTypes = {
 
 
 
-
-
 23-Modificar componente Persona.jsx
-
-
 
 import React, { useState, useCallback } from "react";
 import { Container, Col, Row } from "react-bootstrap";

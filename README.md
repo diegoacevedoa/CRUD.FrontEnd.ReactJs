@@ -817,3 +817,92 @@ export const Persona = () => {
     </>
   );
 };
+
+
+
+DOCKERIZAR UNA APP FRONTEND CON DOCKER DESKTOP
+
+1- Crear archivo Dockerfile:
+
+
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
+
+FROM node:18-alpine AS development
+
+WORKDIR /app
+
+COPY --chown=node:node package*.json ./
+
+RUN npm ci
+
+COPY --chown=node:node . .
+
+USER node
+
+###################
+# BUILD FOR PRODUCTION
+###################
+
+FROM node:18-alpine AS build
+
+WORKDIR /app
+
+COPY --chown=node:node package*.json ./
+
+COPY --chown=node:node --from=development /app/node_modules ./node_modules
+
+COPY --chown=node:node . .
+
+RUN npm run build
+
+USER node
+
+###################
+# PRODUCTION
+###################
+
+FROM node:18-alpine AS production
+
+ENV NODE_ENV production
+
+COPY --chown=node:node --from=build /app/node_modules ./node_modules
+COPY --chown=node:node --from=build /app/dist ./dist
+
+COPY --chown=node:node . .
+
+CMD ["npm", "run", "preview"]
+
+
+2- Para evitar tirar comandos para crear imagenes, se debe crear archivo docker-compose.yml:
+
+version: '3.9' # optional since v1.27.0
+services:
+  web-crud-react:
+    image: web-crud-react-image
+    container_name: web-crud-react-container
+    build: .
+    ports:
+      - '8001:8001'
+    environment:
+      VITE_APP_API_URL: http://localhost:3000/api
+
+3- Modificar archivo vite.config.js para especificar el puerto, igual al del docker-compose.yml:
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  preview: {
+    watch: {
+      usePolling: true,
+    },
+    host: true, // needed for the Docker Container port mapping to work
+    strictPort: true,
+    port: 8001, // you can replace this port with any port
+  },
+});
+

@@ -1,0 +1,10 @@
+version: '3.9' # optional since v1.27.0
+services:
+  web-crud-react:
+    image: web-crud-react-image
+    container_name: web-crud-react-container
+    build: .
+    ports:
+      - '8001:8001'
+    environment:
+      VITE_APP_API_URL: http://localhost:3000/api
